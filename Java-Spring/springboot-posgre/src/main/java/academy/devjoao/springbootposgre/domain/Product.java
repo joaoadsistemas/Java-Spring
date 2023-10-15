@@ -1,4 +1,4 @@
-package academy.devjoao.springbootinitial.domain;
+package academy.devjoao.springbootposgre.domain;
 
 import jakarta.persistence.*;
 import lombok.*;
