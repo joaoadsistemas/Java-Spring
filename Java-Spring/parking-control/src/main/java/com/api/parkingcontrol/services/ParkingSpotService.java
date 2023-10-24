@@ -68,7 +68,7 @@ public class ParkingSpotService {
         if (!parkingSpotModelOptional.isPresent()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Parking Spot Not Found");
         }
-        parkingSpotRepository.deleteById(id);
+        parkingSpotRepository.deleteById(parkingSpotModelOptional.get().getId());
         return ResponseEntity.status(HttpStatus.OK).body("Parking Spot Deleted sucessfuly");
 
     }
