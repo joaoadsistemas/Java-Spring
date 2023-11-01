@@ -1,0 +1,1 @@
+    alter table remedio add column ativo int;
