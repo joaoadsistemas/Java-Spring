@@ -1,10 +1,10 @@
-package com.joaosilveira.orders;
+package com.joaosilveira.projectOrders;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class OrdersApplicationTests {
+class ProjectOrdersApplicationTests {
 
 	@Test
 	void contextLoads() {
