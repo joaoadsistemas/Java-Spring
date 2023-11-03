@@ -1,5 +1,7 @@
 package com.joaosilveira.demo.services;
 
+import com.joaosilveira.demo.data.vo.v1.PersonVO;
+import com.joaosilveira.demo.mapper.DozerMapper;
 import com.joaosilveira.demo.model.Person;
 import com.joaosilveira.demo.repository.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,30 +20,33 @@ public class PersonService {
 
     private Logger logger = Logger.getLogger(PersonService.class.getName());
 
-    public List<Person> findAll() {
+    public List<PersonVO> findAll() {
 
         logger.info("Finding All people");
 
-        return personRepository.findAll();
+        return DozerMapper.parseListObjects(personRepository.findAll(),PersonVO.class);
     }
 
 
 
-    public Person findById(Long id) {
+    public PersonVO findById(Long id) {
         logger.info("Finding one person");
 
         var person = personRepository.findById(id);
 
-        return person.get();
+        return DozerMapper.parseObject(person, PersonVO.class);
     }
 
-    public Person create(Person person) {
+    public PersonVO create(PersonVO person) {
         logger.info("Creating one person!");
 
-        return personRepository.save(person);
+        var entity = DozerMapper.parseObject(person, Person.class);
+        var vo = DozerMapper.parseObject(personRepository.save(entity), PersonVO.class);
+        return vo;
+
     }
 
-    public Person update(Person person) {
+    public PersonVO update(PersonVO person) {
         logger.info("Creating one person!");
 
         var entityPerson = personRepository.findById(person.getId());
@@ -55,7 +60,8 @@ public class PersonService {
 
         System.out.println(person.getAdress());
 
-        return personRepository.save(entity);
+        var vo = DozerMapper.parseObject(personRepository.save(entity), PersonVO.class);
+        return vo;
     }
 
     public void delete(Long id) {

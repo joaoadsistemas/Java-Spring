@@ -1,6 +1,6 @@
 package com.joaosilveira.demo.controllers;
 
-import com.joaosilveira.demo.model.Person;
+import com.joaosilveira.demo.data.vo.v1.PersonVO;
 import com.joaosilveira.demo.services.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,31 +17,31 @@ import java.util.List;
 public class PersonController {
 
     @Autowired
-    private PersonService personService;
+    private PersonService PersonService;
 
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Person findById(@PathVariable(value = "id") Long id) {
-        return personService.findById(id);
+    public PersonVO findById(@PathVariable(value = "id") Long id) {
+        return PersonService.findById(id);
     }
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Person> findAll() {
-        return personService.findAll();
+    public List<PersonVO> findAll() {
+        return PersonService.findAll();
     }
 
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public Person create(@RequestBody Person person) {
-        return personService.create(person);
+    public PersonVO create(@RequestBody PersonVO PersonVO) {
+        return PersonService.create(PersonVO);
     }
 
     @PutMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public Person update(@RequestBody Person person) {
-        return personService.update(person);
+    public PersonVO update(@RequestBody PersonVO PersonVO) {
+        return PersonService.update(PersonVO);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity delete(@PathVariable(value = "id") Long id) {
-        personService.delete(id);
+        PersonService.delete(id);
         return ResponseEntity.noContent().build();
     }
 

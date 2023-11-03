@@ -17,9 +17,9 @@ public class AnimeService {
     private static List<Anime> animes;
     static {
         animes = List.copyOf(List.of(
-                new Anime("DBZ", 1L),
-                new Anime("Naruto", 2L),
-                new Anime("HxH", 3L)
+                new Anime( 1L, "DBZ"),
+                new Anime( 2L, "Naruto"),
+                new Anime( 3L, "HxH")
         ));
     }
 
