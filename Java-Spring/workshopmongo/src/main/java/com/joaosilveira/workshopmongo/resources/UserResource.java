@@ -1,6 +1,7 @@
 package com.joaosilveira.workshopmongo.resources;
 
 import com.joaosilveira.workshopmongo.dtos.UserDTO;
+import com.joaosilveira.workshopmongo.entities.Post;
 import com.joaosilveira.workshopmongo.entities.User;
 import com.joaosilveira.workshopmongo.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,12 +43,18 @@ public class UserResource {
         return ResponseEntity.noContent().build();
     }
 
+
     @PutMapping("/{id}")
     public ResponseEntity<Void> update(@PathVariable(value = "id") String id, @RequestBody UserDTO objDTO) {
         User obj = service.fromDTO(objDTO);
         obj.setId(id);
         service.update(obj);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/{id}/posts")
+    public ResponseEntity<List<Post>> findPosts(@PathVariable(value = "id") String id) {
+        return ResponseEntity.ok().body(service.findById(id).getPosts());
     }
 
 
