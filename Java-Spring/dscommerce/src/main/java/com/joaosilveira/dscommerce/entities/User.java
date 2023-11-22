@@ -16,6 +16,8 @@ public class User implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+    // o email será único
+    @Column(unique = true)
     private String email;
     private String phone;
     private LocalDate birthDate;
