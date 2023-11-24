@@ -2,6 +2,7 @@ package com.joaosilveira.dscommerce.controllers;
 
 import com.joaosilveira.dscommerce.dto.ProductDTO;
 import com.joaosilveira.dscommerce.services.ProductService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -31,16 +32,18 @@ public class ProductController {
         return ResponseEntity.ok(service.findAll(pageable));
     }
 
+    // Adicionar Valid para as validações de BEANS do DTO serem aceitas
     @PostMapping
-    public ResponseEntity<ProductDTO> insert(@RequestBody ProductDTO dto) {
+    public ResponseEntity<ProductDTO> insert(@Valid @RequestBody ProductDTO dto) {
         dto = service.insert(dto);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
                 .buildAndExpand(dto.getId()).toUri();
         return ResponseEntity.created(uri).body(dto);
     }
 
+    // Adicionar Valid para as validações de BEANS do DTO serem aceitas
     @PutMapping("/{id}")
-    public ResponseEntity<ProductDTO > update(@PathVariable(value = "id") Long id, @RequestBody ProductDTO body) {
+    public ResponseEntity<ProductDTO > update(@PathVariable(value = "id") Long id,@Valid @RequestBody ProductDTO body) {
         return ResponseEntity.ok(service.update(id, body));
     }
 
