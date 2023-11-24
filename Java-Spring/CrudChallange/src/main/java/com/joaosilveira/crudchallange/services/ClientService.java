@@ -46,7 +46,7 @@ public class ClientService {
     @Transactional
     public ClientDTO update(ClientDTO dto, Long id) {
         try {
-            Client entity = repository.getReferenceById(id);
+            var entity = repository.getReferenceById(id);
             copyDtoToEntity(dto, entity);
             entity = repository.save(entity);
             return new ClientDTO(entity);
