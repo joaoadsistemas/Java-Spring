@@ -25,7 +25,7 @@ public class Uri2621Application implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 
-		List<ProductMinProjection> projections = repository.search1("p");
+		List<ProductMinProjection> projections = repository.search1(10, 20, "p");
 		List<ProductMinDTO> result = projections.stream().map(ProductMinDTO::new).collect(Collectors.toList());
 
 		System.out.println("\n SQL RAIZ");
