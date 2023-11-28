@@ -28,8 +28,8 @@ public class ProductController {
 
     // Pageable tem que ser do spring.domain
     @GetMapping
-    public ResponseEntity<Page<ProductDTO>> findAll(Pageable pageable) {
-        return ResponseEntity.ok(service.findAll(pageable));
+    public ResponseEntity<Page<ProductDTO>> findAll(@RequestParam(name = "name", defaultValue = "") String name ,Pageable pageable) {
+        return ResponseEntity.ok(service.findAll(name, pageable));
     }
 
     // Adicionar Valid para as validações de BEANS do DTO serem aceitas
