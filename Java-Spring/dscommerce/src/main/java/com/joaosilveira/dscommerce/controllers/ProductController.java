@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -27,12 +28,14 @@ public class ProductController {
     }
 
     // Pageable tem que ser do spring.domain
+
     @GetMapping
     public ResponseEntity<Page<ProductDTO>> findAll(@RequestParam(name = "name", defaultValue = "") String name ,Pageable pageable) {
         return ResponseEntity.ok(service.findAll(name, pageable));
     }
 
     // Adicionar Valid para as validações de BEANS do DTO serem aceitas
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @PostMapping
     public ResponseEntity<ProductDTO> insert(@Valid @RequestBody ProductDTO dto) {
         dto = service.insert(dto);
@@ -42,11 +45,13 @@ public class ProductController {
     }
 
     // Adicionar Valid para as validações de BEANS do DTO serem aceitas
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @PutMapping("/{id}")
     public ResponseEntity<ProductDTO > update(@PathVariable(value = "id") Long id,@Valid @RequestBody ProductDTO body) {
         return ResponseEntity.ok(service.update(id, body));
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable(value = "id") Long id) {
         service.delete(id);
