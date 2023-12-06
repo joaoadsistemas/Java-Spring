@@ -1,6 +1,7 @@
 package com.joaosilveira.dscommerce.controllers;
 
 import com.joaosilveira.dscommerce.dto.ProductDTO;
+import com.joaosilveira.dscommerce.dto.ProductMinDTO;
 import com.joaosilveira.dscommerce.services.ProductService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +31,8 @@ public class ProductController {
     // Pageable tem que ser do spring.domain
 
     @GetMapping
-    public ResponseEntity<Page<ProductDTO>> findAll(@RequestParam(name = "name", defaultValue = "") String name ,Pageable pageable) {
+    public ResponseEntity<Page<ProductMinDTO>> findAll(@RequestParam(name = "name", defaultValue = "") String name ,
+                                                     Pageable pageable) {
         return ResponseEntity.ok(service.findAll(name, pageable));
     }
 
@@ -47,7 +49,8 @@ public class ProductController {
     // Adicionar Valid para as validações de BEANS do DTO serem aceitas
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @PutMapping("/{id}")
-    public ResponseEntity<ProductDTO > update(@PathVariable(value = "id") Long id,@Valid @RequestBody ProductDTO body) {
+    public ResponseEntity<ProductDTO> update(@PathVariable(value = "id") Long id,
+                                                @Valid @RequestBody ProductDTO body) {
         return ResponseEntity.ok(service.update(id, body));
     }
 
@@ -57,5 +60,7 @@ public class ProductController {
         service.delete(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
+
+
 
 }
