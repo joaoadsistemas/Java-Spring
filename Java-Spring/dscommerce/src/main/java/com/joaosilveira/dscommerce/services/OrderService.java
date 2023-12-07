@@ -30,12 +30,18 @@ public class OrderService {
     @Autowired
     private OrderItemRepository orderItemRepository;
 
+    @Autowired
+    private AuthService authService;
+
     @Transactional(readOnly = true)
     public OrderDTO findById(Long id) {
         Optional<Order> result = orderRepository.findById(id);
         Order product = result.orElseThrow(
                 () -> new ResourceNotFoundException("Recurso nao encontrado")
         );
+
+        // validação se é admin ou o dono do pedido
+        authService.validateSelfOrAdmin(product.getClient().getId());
         OrderDTO dto = new OrderDTO(product);
         return dto;
     }
