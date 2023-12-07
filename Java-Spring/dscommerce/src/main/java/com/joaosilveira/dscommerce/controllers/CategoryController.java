@@ -20,7 +20,7 @@ public class CategoryController {
 
     @Autowired
     private CategoryService service;
-    
+
     @GetMapping()
     public ResponseEntity<List<CategoryDTO>> findAll() {
         return ResponseEntity.ok(service.findAll());
