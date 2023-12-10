@@ -15,11 +15,15 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+
+    @Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
     private Instant date;
 
     @Column(columnDefinition = "TEXT")
     private String description;
     private Double price;
+
+    @Column(columnDefinition = "TEXT")
     private String imgUrl;
 
     @ManyToMany
@@ -86,6 +90,11 @@ public class Product {
 
     public void setDate(Instant date) {
         this.date = date;
+    }
+
+    @PrePersist
+    public void prePersist() {
+        this.date = Instant.now();
     }
 
     public Set<Category> getCategories() {
