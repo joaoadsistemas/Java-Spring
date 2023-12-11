@@ -29,10 +29,9 @@ public class Category {
 
     }
 
-    public Category(Long id, String name, Instant createdAt) {
+    public Category(Long id, String name) {
         this.id = id;
         this.name = name;
-        this.createdAt = createdAt;
     }
 
     public Long getId() {
