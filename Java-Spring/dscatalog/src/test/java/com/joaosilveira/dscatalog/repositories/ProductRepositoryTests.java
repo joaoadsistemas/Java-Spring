@@ -28,6 +28,28 @@ public class ProductRepositoryTests {
     }
 
     @Test
+    public void findShouldOptionalEmptyWhenIdNotExists() {
+        // Arrange
+        long inexistsId = 0L;
+
+        //Act
+        Optional<Product> optional = repository.findById(inexistsId);
+
+
+        //Assert
+        Assertions.assertTrue(optional.isEmpty());
+    }
+
+    @Test
+    public void findShouldCallProductWhenIdExists() {
+        //Act
+        Optional<Product> optional = repository.findById(existisId);
+
+        //Assert
+        Assertions.assertNotNull(optional);
+    }
+
+    @Test
     public void saveShouldPersistWithAutoincrementWhenIdIsNull() {
 
         //Arrange
