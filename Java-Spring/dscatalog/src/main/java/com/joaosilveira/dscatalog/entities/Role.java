@@ -1,9 +1,17 @@
 package com.joaosilveira.dscatalog.entities;
 
-import java.util.Objects;
+import jakarta.persistence.*;
 
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
+
+@Entity
+@Table(name = "tb_role")
 public class Role {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String authority;
 
