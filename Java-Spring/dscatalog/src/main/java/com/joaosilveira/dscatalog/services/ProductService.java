@@ -58,6 +58,7 @@ public class ProductService {
 
     }
 
+    @Transactional
     public ProductDTO update(ProductDTO dto, Long id) {
         try {
             Product entity = productRepository.getReferenceById(id);
