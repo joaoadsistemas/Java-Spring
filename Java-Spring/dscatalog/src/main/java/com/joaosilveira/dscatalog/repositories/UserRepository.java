@@ -9,9 +9,11 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface UserRepository extends JpaRepository<User, Long> {
 
-
     @Query(value = "SELECT new com.joaosilveira.dscatalog.dtos.UserDTO(obj) FROM User obj",
             countQuery = "SELECT COUNT(obj) FROM User obj JOIN obj.roles")
     Page<UserDTO> findAllPageable(Pageable pageable);
+
+    // busca no banco de dados um Usuário passando um email como argumento
+    User findByEmail(String email);
 
 }
