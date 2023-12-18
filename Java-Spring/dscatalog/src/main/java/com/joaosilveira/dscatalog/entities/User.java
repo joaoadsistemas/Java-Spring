@@ -15,6 +15,9 @@ public class User {
     private Long id;
     private String firstName;
     private String lastName;
+
+    //deixando a coluna email como única
+    @Column(unique = true)
     private String email;
     private String password;
 

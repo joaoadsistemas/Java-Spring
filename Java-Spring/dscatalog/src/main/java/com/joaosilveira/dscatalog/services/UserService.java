@@ -3,6 +3,7 @@ package com.joaosilveira.dscatalog.services;
 
 import com.joaosilveira.dscatalog.dtos.RoleDTO;
 import com.joaosilveira.dscatalog.dtos.UserDTO;
+import com.joaosilveira.dscatalog.dtos.UserInsertDTO;
 import com.joaosilveira.dscatalog.entities.Category;
 import com.joaosilveira.dscatalog.entities.Role;
 import com.joaosilveira.dscatalog.entities.User;
@@ -15,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,6 +30,10 @@ public class UserService {
 
     @Autowired
     private RoleRepository roleRepository;
+
+    // Instanciando o Bcrypt que foi colocando como Bean na classe AppConfig
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
 
 
     @Transactional(readOnly = true)
@@ -57,11 +63,14 @@ public class UserService {
     }
 
     @Transactional
-    public UserDTO insert(UserDTO dto) {
+    public UserInsertDTO insert(UserInsertDTO dto) {
         User user = new User();
         copyUserDtoToEntity(dto, user);
+        // pega a senha que o usuario digitar e transforma ela em um HASH
+        user.setPassword(passwordEncoder.encode(dto.getPassword()));
         user = userRepository.save(user);
-        return new UserDTO(user);
+        // devolve o DTO que contém também a senha
+        return new UserInsertDTO(user);
     }
 
     public void deleteById(Long id) {

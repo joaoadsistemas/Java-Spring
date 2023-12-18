@@ -2,6 +2,7 @@ package com.joaosilveira.dscatalog.controllers;
 
 
 import com.joaosilveira.dscatalog.dtos.UserDTO;
+import com.joaosilveira.dscatalog.dtos.UserInsertDTO;
 import com.joaosilveira.dscatalog.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -35,7 +36,7 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<UserDTO> insert(@RequestBody UserDTO dto) {
+    public ResponseEntity<UserInsertDTO> insert(@RequestBody UserInsertDTO dto) {
         dto = userService.insert(dto);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
                 .buildAndExpand(dto.getId()).toUri();
