@@ -4,6 +4,7 @@ package com.joaosilveira.dscatalog.controllers;
 import com.joaosilveira.dscatalog.dtos.UserDTO;
 import com.joaosilveira.dscatalog.dtos.UserInsertDTO;
 import com.joaosilveira.dscatalog.services.UserService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -31,12 +32,12 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<UserDTO> update(@PathVariable(value = "id") Long id, @RequestBody UserDTO dto) {
+    public ResponseEntity<UserDTO> update(@Valid @PathVariable(value = "id") Long id, @RequestBody UserDTO dto) {
         return ResponseEntity.ok(userService.update(id, dto));
     }
 
     @PostMapping
-    public ResponseEntity<UserInsertDTO> insert(@RequestBody UserInsertDTO dto) {
+    public ResponseEntity<UserInsertDTO> insert(@Valid @RequestBody UserInsertDTO dto) {
         dto = userService.insert(dto);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
                 .buildAndExpand(dto.getId()).toUri();
