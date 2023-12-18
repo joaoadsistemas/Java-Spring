@@ -3,6 +3,7 @@ package com.joaosilveira.dscatalog.controllers;
 
 import com.joaosilveira.dscatalog.dtos.UserDTO;
 import com.joaosilveira.dscatalog.dtos.UserInsertDTO;
+import com.joaosilveira.dscatalog.dtos.UserUpdateDTO;
 import com.joaosilveira.dscatalog.services.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +33,7 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<UserDTO> update(@Valid @PathVariable(value = "id") Long id, @RequestBody UserDTO dto) {
+    public ResponseEntity<UserDTO> update(@Valid @PathVariable(value = "id") Long id, @RequestBody UserUpdateDTO dto) {
         return ResponseEntity.ok(userService.update(id, dto));
     }
 

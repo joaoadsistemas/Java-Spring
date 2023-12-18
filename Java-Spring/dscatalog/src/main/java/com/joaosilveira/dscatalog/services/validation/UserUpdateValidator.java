@@ -2,6 +2,7 @@ package com.joaosilveira.dscatalog.services.validation;
 
 import com.joaosilveira.dscatalog.dtos.FieldMessage;
 import com.joaosilveira.dscatalog.dtos.UserInsertDTO;
+import com.joaosilveira.dscatalog.dtos.UserUpdateDTO;
 import com.joaosilveira.dscatalog.entities.User;
 import com.joaosilveira.dscatalog.repositories.UserRepository;
 import jakarta.validation.ConstraintValidator;
@@ -10,19 +11,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.List;
+
 // Validar a inserção de um novo usuário
-// Aqui diz que a minha classe UserInsertDTO vai responder ao UserInsertValid que é o Bean criado
-public class UserInsertValidator implements ConstraintValidator<UserInsertValid, UserInsertDTO> {
+// Aqui diz que a minha classe UserUpdateDTO vai responder ao UserUpdateValid que é o Bean criado
+public class UserUpdateValidator implements ConstraintValidator<UserUpdateValid, UserUpdateDTO> {
 
     @Autowired
     private UserRepository userRepository;
 
     @Override
-    public void initialize(UserInsertValid ann) {
+    public void initialize(UserUpdateValid ann) {
     }
 
     @Override
-    public boolean isValid(UserInsertDTO dto, ConstraintValidatorContext context) {
+    public boolean isValid(UserUpdateDTO dto, ConstraintValidatorContext context) {
         List<FieldMessage> list = new ArrayList<>();
         // Coloque aqui seus testes de validação, acrescentando objetos FieldMessage à lista
 
