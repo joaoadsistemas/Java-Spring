@@ -52,12 +52,12 @@ public class UserService {
     }
 
     @Transactional
-    public UserDTO update(Long id, UserUpdateDTO dto) {
+    public UserUpdateDTO update(Long id, UserUpdateDTO dto) {
         try {
             User entity = userRepository.getReferenceById(id);
             copyUserDtoToEntity(dto, entity);
             entity = userRepository.save(entity);
-            return new UserDTO(entity);
+            return new UserUpdateDTO(entity);
         } catch (EntityNotFoundException e) {
             throw new ResourceNotFoundException("Recurso não encontrado");
         }

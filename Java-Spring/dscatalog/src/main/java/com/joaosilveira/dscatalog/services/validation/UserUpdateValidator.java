@@ -5,12 +5,15 @@ import com.joaosilveira.dscatalog.dtos.UserInsertDTO;
 import com.joaosilveira.dscatalog.dtos.UserUpdateDTO;
 import com.joaosilveira.dscatalog.entities.User;
 import com.joaosilveira.dscatalog.repositories.UserRepository;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.servlet.HandlerMapping;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 // Validar a inserção de um novo usuário
 // Aqui diz que a minha classe UserUpdateDTO vai responder ao UserUpdateValid que é o Bean criado
@@ -19,12 +22,21 @@ public class UserUpdateValidator implements ConstraintValidator<UserUpdateValid,
     @Autowired
     private UserRepository userRepository;
 
+    // usado para pegar o ID da requisição passada na URL
+    @Autowired
+    private HttpServletRequest request;
+
     @Override
     public void initialize(UserUpdateValid ann) {
     }
 
     @Override
     public boolean isValid(UserUpdateDTO dto, ConstraintValidatorContext context) {
+
+        // pega todas as variáveis da URI
+        var uriVars = (Map<String, String>) request.getAttribute(HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE);
+        long userId = Long.parseLong(uriVars.get("id"));
+
         List<FieldMessage> list = new ArrayList<>();
         // Coloque aqui seus testes de validação, acrescentando objetos FieldMessage à lista
 
@@ -32,7 +44,7 @@ public class UserUpdateValidator implements ConstraintValidator<UserUpdateValid,
         // se o objeto for instanciado, quer dizer que existe um usuário com esse email, entao adicionamos um erro
         // a lista de FieldMessage
         User user = userRepository.findByEmail(dto.getEmail());
-        if (user!= null) {
+        if (user!= null && userId != user.getId()) {
             list.add(new FieldMessage("email", "Email já existente"));
         }
 
