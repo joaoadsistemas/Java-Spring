@@ -3,7 +3,9 @@ package com.joaosilveira.authorizationbaseproject.entities;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "tb_user")
@@ -16,7 +18,17 @@ public class User {
 
     @Column(unique = true)
     private String email;
+    private String phone;
+    private LocalDate birthDate;
     private String password;
+
+    // MANYTOMANY APENAS NA CLASSE USER, POIS A CLASSE ROLE NÃO CONHECE SEUS USUÁRIOS
+    @ManyToMany
+    @JoinTable(name = "tb_user_role",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id")
+    )
+    private Set<Role> roles = new HashSet<>();
 
     public User() {
     }
@@ -25,6 +37,8 @@ public class User {
         this.id = id;
         this.name = name;
         this.email = email;
+        this.phone = phone;
+        this.birthDate = birthDate;
         this.password = password;
     }
 
@@ -58,6 +72,41 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public LocalDate getBirthDate() {
+        return birthDate;
+    }
+
+    public void setBirthDate(LocalDate birthDate) {
+        this.birthDate = birthDate;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    // ADICIONAR UM NOVO ROLE AO USUÁRIO
+    public void addRole(Role role) {
+        roles.add(role);
+    }
+
+    // VERIFICA SE UM USUÁRIO TEM A ROLE QUE EU ESTOU PASSANDO
+    public boolean hasRole(String roleName) {
+        for (Role role: roles) {
+            if (role.getAuthority().equals(roleName)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override
