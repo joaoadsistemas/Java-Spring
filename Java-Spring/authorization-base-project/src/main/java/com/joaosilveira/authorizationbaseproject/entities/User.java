@@ -1,15 +1,18 @@
 package com.joaosilveira.authorizationbaseproject.entities;
 
 import jakarta.persistence.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDate;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
 @Entity
 @Table(name = "tb_user")
-public class User {
+public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -69,6 +72,46 @@ public class User {
     public String getPassword() {
         return password;
     }
+
+
+
+    // ----- MÉTODOS DA INTERFACE
+
+    // RETORNA AS ROLES
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return roles;
+    }
+
+
+    // O EMAIL NESSE CASO VAI SER O USERNAME
+    @Override
+    public String getUsername() {
+        return this.email;
+    }
+
+
+    // RETORNAR TRUE EM TODOS OS MÉTODOS BOOLEAN
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
+    // ------------
 
     public void setPassword(String password) {
         this.password = password;

@@ -1,12 +1,14 @@
 package com.joaosilveira.authorizationbaseproject.entities;
 
 import jakarta.persistence.*;
+import org.springframework.security.core.GrantedAuthority;
 
 import java.util.Objects;
 
 @Entity
 @Table(name = "tb_role")
-public class Role {
+// IMPLEMENTANDO A INTERFACE GRANTEDAUTHORITY PARA O FUNCIONAMENTO DAS VALIDAÇÕES DE SEGURANÇA
+public class Role implements GrantedAuthority {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,6 +32,8 @@ public class Role {
         this.id = id;
     }
 
+    // MÉTODO DA INTERFACE GRANTEDAUTHORITY
+    @Override
     public String getAuthority() {
         return authority;
     }
