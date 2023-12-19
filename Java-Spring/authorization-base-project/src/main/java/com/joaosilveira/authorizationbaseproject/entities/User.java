@@ -12,6 +12,8 @@ import java.util.Set;
 
 @Entity
 @Table(name = "tb_user")
+
+// IMPLEMENTANDO A INTERFACE UserDetails PARA O FUNCIONAMENTO DAS VALIDAÇÕES DE SEGURANÇA
 public class User implements UserDetails {
 
     @Id
