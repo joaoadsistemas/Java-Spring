@@ -1,4 +1,4 @@
-package com.joaosilveira.authorizationbaseproject.config.customgrant;
+package com.joaosilveira.authorizationbaseproject.config.customgrantNAOTEMOPQSABER;
 import java.util.Collection;
 
 import org.springframework.security.core.GrantedAuthority;

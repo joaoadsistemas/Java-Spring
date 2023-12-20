@@ -1,4 +1,4 @@
-package com.joaosilveira.authorizationbaseproject.config.customgrant;
+package com.joaosilveira.authorizationbaseproject.config.customgrantNAOTEMOPQSABER;
 
 import java.security.Principal;
 import java.util.HashSet;
