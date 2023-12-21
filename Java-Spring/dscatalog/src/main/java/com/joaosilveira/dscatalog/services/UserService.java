@@ -1,10 +1,7 @@
 package com.joaosilveira.dscatalog.services;
 
 
-import com.joaosilveira.dscatalog.dtos.RoleDTO;
-import com.joaosilveira.dscatalog.dtos.UserDTO;
-import com.joaosilveira.dscatalog.dtos.UserInsertDTO;
-import com.joaosilveira.dscatalog.dtos.UserUpdateDTO;
+import com.joaosilveira.dscatalog.dtos.*;
 import com.joaosilveira.dscatalog.entities.Category;
 import com.joaosilveira.dscatalog.entities.Role;
 import com.joaosilveira.dscatalog.entities.User;
@@ -17,14 +14,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
-public class UserService {
+public class UserService implements UserDetailsService {
 
     @Autowired
     private UserRepository userRepository;
@@ -32,10 +35,21 @@ public class UserService {
     @Autowired
     private RoleRepository roleRepository;
 
-    // Instanciando o Bcrypt que foi colocando como Bean na classe AppConfig
     @Autowired
-    private BCryptPasswordEncoder passwordEncoder;
+    private PasswordEncoder passwordEncoder;
 
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        List<UserDetailsDTO> result = userRepository.searchUserAndRolesByEmail(username);
+
+        if (result.isEmpty()) {
+            throw new UsernameNotFoundException("User not found");
+        }
+
+        User user = new User();
+        seedUserWithRoles(user, username, result);
+        return user;
+    }
 
     @Transactional(readOnly = true)
     public Page<UserDTO> findAll(Pageable pageable) {
@@ -116,4 +130,19 @@ public class UserService {
         entity.setAuthority(roleDTO.getAuthority());
     }
 
+    private void seedUserWithRoles(User user, String username, List<UserDetailsDTO> result) {
+        user.setEmail(username);
+
+        user.setPassword(result.get(0).getPassword());
+
+        List<RoleDTO> roleDTOS = new ArrayList<>();
+
+        for (UserDetailsDTO userDTO : result) {
+            roleDTOS.addAll(userDTO.getRoles());
+        }
+
+        for (RoleDTO role : roleDTOS) {
+            user.getRoles().add(new Role(role.getId(), role.getAuthority()));
+        }
+    }
 }
