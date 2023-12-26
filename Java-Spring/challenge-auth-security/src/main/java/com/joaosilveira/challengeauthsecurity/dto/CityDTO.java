@@ -2,10 +2,13 @@ package com.joaosilveira.challengeauthsecurity.dto;
 
 
 import com.joaosilveira.challengeauthsecurity.entities.City;
+import jakarta.validation.constraints.NotBlank;
 
 public class CityDTO {
 
     private Long id;
+
+    @NotBlank(message = "Campo requerido")
     private String name;
 
     public CityDTO() {

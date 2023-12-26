@@ -6,6 +6,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.joaosilveira.challengeauthsecurity.tests.TokenUtil;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,9 +19,6 @@ import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.joaosilveira.challengeauthsecurity.dto.CityDTO;
-import com.joaosilveira.challengeauthsecurity.tests.TokenUtil;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 @SpringBootTest
 @AutoConfigureMockMvc
 @Transactional
