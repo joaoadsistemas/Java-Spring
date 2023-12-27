@@ -12,8 +12,7 @@ import java.util.List;
 
 public interface UserRepository extends JpaRepository<User, Long> {
 
-    @Query(value = "SELECT new com.joaosilveira.dscatalog.dtos.UserDTO(obj) FROM User obj " +
-            "JOIN FETCH obj.roles",
+    @Query(value = "SELECT new com.joaosilveira.dscatalog.dtos.UserDTO(obj) FROM User obj",
             countQuery = "SELECT COUNT(obj) FROM User obj JOIN obj.roles")
     Page<UserDTO> findAllPageable(Pageable pageable);
 

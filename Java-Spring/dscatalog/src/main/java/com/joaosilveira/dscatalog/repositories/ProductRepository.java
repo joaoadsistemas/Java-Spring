@@ -13,7 +13,6 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     @Query(value = "SELECT new com.joaosilveira.dscatalog.dtos.ProductDTO(obj) " +
             "FROM Product obj " +
-            "JOIN FETCH obj.categories " +
             "WHERE UPPER(obj.name) LIKE UPPER(CONCAT('%', :name, '%'))",
     countQuery = "SELECT COUNT(obj) FROM Product obj JOIN obj.categories")
     Page<ProductDTO> findPageable(String name, Pageable pageable);
