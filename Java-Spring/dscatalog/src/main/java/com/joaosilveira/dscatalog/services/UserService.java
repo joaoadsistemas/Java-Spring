@@ -40,7 +40,7 @@ public class UserService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        List<UserDetailsDTO> result = userRepository.searchUserAndRolesByEmail(username);
+        List<UserInsertDTO> result = userRepository.searchUserAndRolesByEmail(username);
 
         if (result.isEmpty()) {
             throw new UsernameNotFoundException("User not found");
@@ -89,7 +89,7 @@ public class UserService implements UserDetailsService {
     }
 
     public void deleteById(Long id) {
-        if (!roleRepository.existsById(id)) {
+        if (!userRepository.existsById(id)) {
             throw new ResourceNotFoundException("Recurso não encontrado");
         }
         try {
@@ -130,14 +130,14 @@ public class UserService implements UserDetailsService {
         entity.setAuthority(roleDTO.getAuthority());
     }
 
-    private void seedUserWithRoles(User user, String username, List<UserDetailsDTO> result) {
+    private void seedUserWithRoles(User user, String username, List<UserInsertDTO> result) {
         user.setEmail(username);
 
         user.setPassword(result.get(0).getPassword());
 
         List<RoleDTO> roleDTOS = new ArrayList<>();
 
-        for (UserDetailsDTO userDTO : result) {
+        for (UserInsertDTO userDTO : result) {
             roleDTOS.addAll(userDTO.getRoles());
         }
 
