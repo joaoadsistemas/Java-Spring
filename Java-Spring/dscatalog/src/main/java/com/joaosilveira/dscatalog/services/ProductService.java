@@ -9,6 +9,7 @@ import com.joaosilveira.dscatalog.repositories.CategoryRepository;
 import com.joaosilveira.dscatalog.repositories.ProductRepository;
 import com.joaosilveira.dscatalog.services.exceptions.DatabaseException;
 import com.joaosilveira.dscatalog.services.exceptions.ResourceNotFoundException;
+import com.joaosilveira.dscatalog.util.Utils;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -33,25 +34,35 @@ public class ProductService {
     private CategoryRepository categoryRepository;
 
 
-//    @Transactional(readOnly = true)
-//    public Page<ProductDTO> findPageable(String name, Pageable pageable) {
-//        Page<Product> page = productRepository.findPageable(name, pageable);
-//        return page.map(ProductDTO::new);
-
-//    }
     @Transactional(readOnly = true)
     public Page<ProductDTO> findAllPaged(String name, String categoryId, Pageable pageable) {
 
+        // CRIA UMA LISTA VAZIA DE LONG
         List<Long> categoryIds = Arrays.asList();
+
+        // VERIFICA SE O QUE FOI PASSADO COMO "categoryId" é diferente de "0"
+        // SE FOR DIFERENTE, ELE VAI GUARDAR NA LISTA TODOS OS NUMEROS PASSADOS
         if(!"0".equals(categoryId)) {
             categoryIds = Arrays.asList(categoryId.split(",")).stream().map(Long::parseLong).toList();
         }
+
+        // FAZ A CONSULTA SQL
         Page<ProductProjection> page = productRepository.searchProducts(categoryIds, name, pageable);
+
+        // PEGA SOMENTE OS IDS DOS PRODUTOS PASSADOS
         List<Long> productIds = page.map(ProductProjection::getId).toList();
 
+        // FAZ OUTRA CONSULTA SQL AGORA PARA PEGAR OS ID JUNTAMENTE COM AS CATEGORIAS (PROBLEMA N+1 CONSULTAS RESOLVIDO)
         List<Product> entities = productRepository.searchProductsWithCategories(productIds);
+
+        // O intuíto desse Utils.replace é pegar a ordenação que está na lista PAGE e montar uma nova lista de
+        // produtos ordenadas com base na lista desordenada ENTITIES
+        entities = (List<Product>) Utils.replace(page.getContent(), entities);
+
+        // TRANSFORMA CADA PRODUCT EM PRODUCTDTO
         List<ProductDTO> dtos = entities.stream().map(ProductDTO::new).toList();
 
+        // CRIA UMA PAGINA DE PRODUCTDTO
         Page<ProductDTO> pageDto = new PageImpl<>(dtos, page.getPageable(), page.getTotalElements());
         return pageDto;
 
