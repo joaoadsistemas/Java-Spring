@@ -2,6 +2,7 @@ package com.joaosilveira.dscatalog.services;
 
 import com.joaosilveira.dscatalog.dtos.CategoryDTO;
 import com.joaosilveira.dscatalog.entities.Category;
+import com.joaosilveira.dscatalog.projections.ProductProjection;
 import com.joaosilveira.dscatalog.repositories.CategoryRepository;
 import com.joaosilveira.dscatalog.services.exceptions.DatabaseException;
 import com.joaosilveira.dscatalog.services.exceptions.ResourceNotFoundException;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -23,9 +25,9 @@ public class CategoryService {
     private CategoryRepository categoryRepository;
 
     @Transactional(readOnly = true)
-    public Page<CategoryDTO> findPageable(String name, Pageable pageable) {
-        Page<CategoryDTO> page = categoryRepository.findPageable(name, pageable);
-        return page;
+    public List<CategoryDTO> findAll() {
+        List<Category> page = categoryRepository.findAll();
+        return page.stream().map(CategoryDTO::new).toList();
     }
 
     @Transactional(readOnly = true)
@@ -72,9 +74,7 @@ public class CategoryService {
 
     }
 
-
     public void dtoToCategory(CategoryDTO dto, Category category) {
         category.setName(dto.getName());
     }
-
 }
