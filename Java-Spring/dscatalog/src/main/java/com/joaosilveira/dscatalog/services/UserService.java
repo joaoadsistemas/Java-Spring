@@ -81,6 +81,14 @@ public class UserService implements UserDetailsService {
     public UserInsertDTO insert(UserInsertDTO dto) {
         User user = new User();
         copyUserDtoToEntity(dto, user);
+
+        // limpa toddas as roles do usuário
+        user.getRoles().clear();
+        // pega a role_operator no banco de dados usando o QUERY METHOD
+        Role role = roleRepository.findByAuthority("ROLE_OPERATOR");
+        // adicionando a role operator para o usuário
+        user.getRoles().add(role);
+
         // pega a senha que o usuario digitar e transforma ela em um HASH
         user.setPassword(passwordEncoder.encode(dto.getPassword()));
         user = userRepository.save(user);
