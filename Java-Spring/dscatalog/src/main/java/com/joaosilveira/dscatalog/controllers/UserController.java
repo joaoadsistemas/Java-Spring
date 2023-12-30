@@ -35,6 +35,12 @@ public class UserController {
         return ResponseEntity.ok(userService.findById(id));
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_OPERATOR')")
+    @GetMapping("/me")
+    public ResponseEntity<UserDTO> findMe() {
+        return ResponseEntity.ok(userService.findMe());
+    }
+
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @PutMapping("/{id}")
     public ResponseEntity<UserUpdateDTO> update(@Valid @PathVariable(value = "id") Long id,

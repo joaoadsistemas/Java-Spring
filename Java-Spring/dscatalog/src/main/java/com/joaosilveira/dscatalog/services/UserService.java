@@ -38,6 +38,9 @@ public class UserService implements UserDetailsService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @Autowired
+    private AuthService authService;
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         List<UserInsertDTO> result = userRepository.searchUserAndRolesByEmail(username);
@@ -62,6 +65,12 @@ public class UserService implements UserDetailsService {
         User user = userOptional.orElseThrow(() -> {
            throw new ResourceNotFoundException("Recurso não encontrado");
         });
+        return new UserDTO(user);
+    }
+
+    @Transactional(readOnly = true)
+    public UserDTO findMe() {
+        User user = authService.authenticated();
         return new UserDTO(user);
     }
 
