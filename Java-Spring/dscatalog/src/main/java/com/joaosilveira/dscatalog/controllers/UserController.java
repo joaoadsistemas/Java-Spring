@@ -35,6 +35,7 @@ public class UserController {
         return ResponseEntity.ok(userService.findById(id));
     }
 
+    // endpoint para pegar o usuário logado
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_OPERATOR')")
     @GetMapping("/me")
     public ResponseEntity<UserDTO> findMe() {

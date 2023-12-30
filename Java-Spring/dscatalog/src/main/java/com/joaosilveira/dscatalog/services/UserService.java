@@ -68,6 +68,8 @@ public class UserService implements UserDetailsService {
         return new UserDTO(user);
     }
 
+
+    // MÉTODO PARA PEGAR O USUÁRIO LOGADO
     @Transactional(readOnly = true)
     public UserDTO findMe() {
         User user = authService.authenticated();

@@ -22,6 +22,8 @@ public class AuthController {
     @Autowired
     private AuthService authService;
 
+
+    // ENDPOINT PARA RECUPERAR A SENHA
     @PostMapping("/recover-token")
     public ResponseEntity<Void> createRecoverToken(@Valid @RequestBody EmailDTO body) {
         authService.createRecoverToken(body);
@@ -29,6 +31,7 @@ public class AuthController {
 
     }
 
+    // ENDPOINT PARA SALVAR A NOVA SENHA
     @PutMapping("/new-password")
     public ResponseEntity<Void> saveNewPassword(@Valid @RequestBody NewPasswordDTO body) {
         authService.saveNewPassword(body);
