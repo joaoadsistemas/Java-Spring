@@ -1,6 +1,7 @@
 package com.joaosilveira.dscatalog.services;
 
 import com.joaosilveira.dscatalog.dtos.EmailDTO;
+import com.joaosilveira.dscatalog.dtos.NewPasswordDTO;
 import com.joaosilveira.dscatalog.entities.PasswordRecover;
 import com.joaosilveira.dscatalog.entities.User;
 import com.joaosilveira.dscatalog.repositories.PasswordRecoverRepository;
@@ -8,10 +9,13 @@ import com.joaosilveira.dscatalog.repositories.UserRepository;
 import com.joaosilveira.dscatalog.services.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -32,9 +36,11 @@ public class AuthService {
     @Autowired
     private EmailService emailService;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @Transactional
     public void createRecoverToken(EmailDTO body) {
-
         User user = userRepository.findByEmail(body.getEmail());
         if (user == null) {
             throw new ResourceNotFoundException("Email não encontrado");
@@ -53,5 +59,18 @@ public class AuthService {
                 recoverUri + token + ". Validade de " + tokenMinutes + " minutos";
 
         emailService.sendEmail(body.getEmail(), "Recuperação de senha", textBody);
+    }
+
+    @Transactional
+    public void saveNewPassword(NewPasswordDTO body) {
+
+        List<PasswordRecover> result = passwordRecoverRepository.searchValidTokens(body.getToken(), Instant.now());
+        if (result.isEmpty()) {
+            throw new ResourceNotFoundException("Token inválido");
+        }
+
+        User user = userRepository.findByEmail(result.get(0).getEmail());
+        user.setPassword(passwordEncoder.encode(body.getPassword()));
+        user = userRepository.save(user);
     }
 }
