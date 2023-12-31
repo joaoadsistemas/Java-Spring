@@ -1,10 +1,14 @@
 package com.joaosilveira.challengemovieflix.services;
 
 
+import com.joaosilveira.challengemovieflix.dto.MovieCardDTO;
 import com.joaosilveira.challengemovieflix.dto.MovieDetailsDTO;
+import com.joaosilveira.challengemovieflix.dto.ReviewDTO;
 import com.joaosilveira.challengemovieflix.entities.Movie;
+import com.joaosilveira.challengemovieflix.entities.Review;
 import com.joaosilveira.challengemovieflix.projections.GenreProjection;
 import com.joaosilveira.challengemovieflix.repositories.MovieRepository;
+import com.joaosilveira.challengemovieflix.repositories.ReviewRepository;
 import com.joaosilveira.challengemovieflix.services.exceptions.ResourceNotFoundException;
 import com.joaosilveira.challengemovieflix.util.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +28,9 @@ public class MovieService {
     @Autowired
     private MovieRepository movieRepository;
 
+    @Autowired
+    private ReviewRepository reviewRepostiory;
+
     @Transactional(readOnly = true)
     public MovieDetailsDTO findById(Long id) {
         Optional<Movie> movieOptional = movieRepository.findById(id);
@@ -33,7 +40,8 @@ public class MovieService {
         return new MovieDetailsDTO(movie);
     }
 
-    public Page<MovieDetailsDTO> findAllPaged(String title, String genreId, Pageable pageable) {
+    @Transactional(readOnly = true)
+    public Page<MovieCardDTO> findAllPaged(String title, String genreId, Pageable pageable) {
 
         // CRIA UMA LISTA VAZIA DE LONG
         List<Long> genreIds = Arrays.asList();
@@ -58,10 +66,20 @@ public class MovieService {
         entities = (List<Movie>) Utils.replace(page.getContent(), entities);
 
         // TRANSFORMA CADA PRODUCT EM PRODUCTDTO
-        List<MovieDetailsDTO> dtos = entities.stream().map(MovieDetailsDTO::new).toList();
+        List<MovieCardDTO> dtos = entities.stream().map(MovieCardDTO::new).toList();
 
         // CRIA UMA PAGINA DE PRODUCTDTO
-        Page<MovieDetailsDTO> pageDto = new PageImpl<>(dtos, page.getPageable(), page.getTotalElements());
+        Page<MovieCardDTO> pageDto = new PageImpl<>(dtos, page.getPageable(), page.getTotalElements());
         return pageDto;
+    }
+
+    @Transactional(readOnly = true)
+    public List<ReviewDTO> review(Long id) {
+        if (!movieRepository.existsById(id)) {
+            throw new ResourceNotFoundException("Recurso não encontrado");
+        }
+        List<Review> reviewList = reviewRepostiory.findReviewsByMovieId(id);
+        return reviewList.stream().map(ReviewDTO::new).toList();
+
     }
 }
