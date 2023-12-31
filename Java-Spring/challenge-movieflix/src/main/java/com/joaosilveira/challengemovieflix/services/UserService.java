@@ -26,14 +26,15 @@ public class UserService implements UserDetailsService {
 	
 	@Transactional(readOnly = true)
 	public UserDTO getProfile() {
-		return new UserDTO(authService.authenticated());
+		User user = authService.authenticated();
+		return new UserDTO(user);
 	}
 	
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		
 		List<UserDetailsProjection> result = repository.searchUserAndRolesByEmail(username);
-		if (result.size() == 0) {
+		if (result.isEmpty()) {
 			throw new UsernameNotFoundException("Email not found");
 		}
 		
@@ -46,4 +47,6 @@ public class UserService implements UserDetailsService {
 		
 		return user;
 	}
+
+
 }

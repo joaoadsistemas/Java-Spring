@@ -16,13 +16,13 @@ public class AuthService {
 
 	@Autowired
 	private UserRepository userRepository;
-	
+
 	protected User authenticated() {
 		try {
 			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 			Jwt jwtPrincipal = (Jwt) authentication.getPrincipal();
 			String username = jwtPrincipal.getClaim("username");
-			return userRepository.findByEmail(username);
+				return userRepository.findByEmail(username);
 		}
 		catch (Exception e) {
 			throw new UsernameNotFoundException("Invalid user");

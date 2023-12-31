@@ -1,4 +1,4 @@
-package com.devsuperior.movieflix.config;
+package com.joaosilveira.challengemovieflix.config;
 
 import java.util.Arrays;
 
