@@ -1,8 +1,12 @@
 package com.joaosilveira.mytestsintegrationunitary.services;
 
+import com.joaosilveira.mytestsintegrationunitary.dtos.GenreDTO;
+import com.joaosilveira.mytestsintegrationunitary.dtos.GenreNoFilmDTO;
 import com.joaosilveira.mytestsintegrationunitary.dtos.MovieDTO;
+import com.joaosilveira.mytestsintegrationunitary.entities.Genre;
 import com.joaosilveira.mytestsintegrationunitary.entities.Movie;
 import com.joaosilveira.mytestsintegrationunitary.projections.MovieProjection;
+import com.joaosilveira.mytestsintegrationunitary.repositories.GenreRepository;
 import com.joaosilveira.mytestsintegrationunitary.repositories.MovieRepository;
 import com.joaosilveira.mytestsintegrationunitary.services.exceptions.DatabaseException;
 import com.joaosilveira.mytestsintegrationunitary.services.exceptions.ResourceNotFoundException;
@@ -22,6 +26,9 @@ public class MovieService {
 
     @Autowired
     private MovieRepository movieRepository;
+
+    @Autowired
+    private GenreRepository genreRepository;
 
     @Transactional(readOnly = true)
     public Page<MovieDTO> findAllMoviesPage(Pageable pageable) {
@@ -75,8 +82,20 @@ public class MovieService {
     }
 
     private void copyDtoToEntity(MovieDTO dto, Movie entity) {
-        entity.setId(dto.getId());
         entity.setMovieName(dto.getMovieName());
         entity.setDescription(dto.getDescription());
+
+        entity.getGenres().clear();
+        Genre genre = new Genre();
+        for (GenreNoFilmDTO genreDTO: dto.getGenres()) {
+
+            if (!genreRepository.existsById(genreDTO.getId())) {
+                throw new ResourceNotFoundException(("Id de genero inválido"));
+            }
+
+            genre = genreRepository.getReferenceById(genreDTO.getId());
+            entity.getGenres().add(genre);
+        }
+
     }
 }
