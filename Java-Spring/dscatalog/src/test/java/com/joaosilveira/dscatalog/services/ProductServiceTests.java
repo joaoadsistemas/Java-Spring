@@ -44,7 +44,7 @@ public class ProductServiceTests {
     private Category category;
 
     // nos testes de página se usa esse PageImpl
-    private PageImpl<ProductDTO> page;
+        private PageImpl<ProductDTO> page;
     private Product product;
 
     @BeforeEach
