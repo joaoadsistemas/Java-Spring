@@ -60,8 +60,8 @@ public class MovieServiceTestsIT {
 
          // verifica se o resultado não é nulo
         Assertions.assertNotNull(result);
-        // verifica se o id do resultado é igual ao id do DTO
-        Assertions.assertEquals(dto.getId(), result.getId());
+        // verifica se o id do resultado é igual a 4, que é o que não existe ainda
+        Assertions.assertEquals(4, result.getId());
     }
 
     @Test
