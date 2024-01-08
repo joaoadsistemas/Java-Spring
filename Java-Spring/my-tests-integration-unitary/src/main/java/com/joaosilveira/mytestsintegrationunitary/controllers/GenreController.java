@@ -2,6 +2,7 @@ package com.joaosilveira.mytestsintegrationunitary.controllers;
 
 
 import com.joaosilveira.mytestsintegrationunitary.dtos.GenreDTO;
+import com.joaosilveira.mytestsintegrationunitary.dtos.GenreNoFilmDTO;
 import com.joaosilveira.mytestsintegrationunitary.entities.Genre;
 import com.joaosilveira.mytestsintegrationunitary.services.GenreService;
 import jakarta.validation.Valid;
@@ -22,17 +23,17 @@ public class GenreController {
 
 
     @GetMapping
-    public ResponseEntity<List<Genre>> findAllGenres() {
+    public ResponseEntity<List<GenreNoFilmDTO>> findAllGenres() {
         return ResponseEntity.ok(genreService.findAllGenres());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<GenreDTO> findGenreById(@PathVariable(value = "id") Long id) {
+    public ResponseEntity<GenreNoFilmDTO> findGenreById(@PathVariable(value = "id") Long id) {
         return ResponseEntity.ok(genreService.findGenreById(id));
     }
 
     @PostMapping
-    public ResponseEntity<GenreDTO> insertGenre(@Valid @RequestBody GenreDTO dto) {
+    public ResponseEntity<GenreNoFilmDTO> insertGenre(@Valid @RequestBody GenreNoFilmDTO dto) {
         dto = genreService.insertGenre(dto);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
                 .buildAndExpand(dto.getId()).toUri();
@@ -40,7 +41,7 @@ public class GenreController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<GenreDTO> updateGenre(@PathVariable(value = "id") Long id, @Valid @RequestBody GenreDTO dto) {
+    public ResponseEntity<GenreNoFilmDTO> updateGenre(@PathVariable(value = "id") Long id, @Valid @RequestBody GenreNoFilmDTO dto) {
         return ResponseEntity.ok(genreService.update(id, dto));
     }
 
