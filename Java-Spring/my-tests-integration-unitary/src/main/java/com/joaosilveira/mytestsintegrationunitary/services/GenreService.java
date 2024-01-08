@@ -33,7 +33,7 @@ public class GenreService {
     public GenreNoFilmDTO findGenreById(Long id) {
         Optional<Genre> genreOptional = genreRepository.findById(id);
         Genre genre = genreOptional.orElseThrow(() -> {
-            throw new DatabaseException("Recurso não encontrado");
+            throw new ResourceNotFoundException("Recurso não encontrado");
         });
         return new GenreNoFilmDTO(genre);
     }
