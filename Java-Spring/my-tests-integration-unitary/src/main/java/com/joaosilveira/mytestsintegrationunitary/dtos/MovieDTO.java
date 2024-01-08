@@ -8,6 +8,8 @@ import jakarta.persistence.Column;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -15,10 +17,14 @@ import java.util.Set;
 public class MovieDTO {
 
     private Long id;
+
+    @NotBlank(message = "Campo requerido")
     private String movieName;
 
+    @NotBlank(message = "Campo requerido")
     private String description;
 
+    @NotNull(message = "Insira pelo menos um gênero")
     private Set<GenreNoFilmDTO> genres = new HashSet<>();
 
 
