@@ -1,15 +1,12 @@
-package com.joaosilveira.mytestsintegrationunitary.service;
+package com.joaosilveira.mytestsintegrationunitary.services;
 
 import com.joaosilveira.mytestsintegrationunitary.dtos.MovieDTO;
 import com.joaosilveira.mytestsintegrationunitary.repositories.MovieRepository;
-import com.joaosilveira.mytestsintegrationunitary.services.MovieService;
 import com.joaosilveira.mytestsintegrationunitary.services.exceptions.DatabaseException;
 import com.joaosilveira.mytestsintegrationunitary.services.exceptions.ResourceNotFoundException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;

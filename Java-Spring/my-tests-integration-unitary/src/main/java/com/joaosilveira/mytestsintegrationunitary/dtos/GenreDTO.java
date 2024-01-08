@@ -38,6 +38,10 @@ public class GenreDTO {
         this.genreName = genreProjection.getGenreName();
     }
 
+    public Long getId() {
+        return id;
+    }
+
     public String getGenreName() {
         return genreName;
     }
