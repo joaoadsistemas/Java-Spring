@@ -67,6 +67,9 @@ public class GenreServiceTests {
 
         Mockito.doNothing().when(genreRepository).deleteById(existsId);
         Mockito.doThrow(ResourceNotFoundException.class).when(genreRepository).deleteById(nonExistsId);
+
+        // quando o genreRepository.existsById for chamado, ele deverá retornar true quando um id dependente for passado
+        Mockito.when(genreRepository.existsById(dependentId)).thenReturn(true);
         Mockito.doThrow(DatabaseException.class).when(genreRepository).deleteById(dependentId);
     }
 
@@ -128,7 +131,7 @@ public class GenreServiceTests {
     public void deleteShouldThrowResourceNotFoundExceptionWhenIdDoesNotExists() {
 
         Assertions.assertThrows(ResourceNotFoundException.class, () -> {
-            genreRepository.deleteById(nonExistsId);
+            genreService.deleteById(nonExistsId);
         });
 
     }
@@ -136,7 +139,7 @@ public class GenreServiceTests {
     @Test
     public void deleteShouldThrowDatabaseExceptionWhenDependentId() {
         Assertions.assertThrows(DatabaseException.class, () -> {
-            genreRepository.deleteById(dependentId);
+            genreService.deleteById(dependentId);
         });
     }
 

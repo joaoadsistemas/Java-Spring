@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
-// @SpringBootTest É USADO PARA FAZER TESTES DE INTEGRAÇÃO (SEM MOCK, COM AS DEPENDENCIAS VERDADEIRAS)
+// @SpringBootTest É USADO PARA FAZER TESTES DE INTEGRAÇÃO (SEM MOCK DO REPOSITÓRIO, COM AS DEPENDENCIAS VERDADEIRAS)
 @SpringBootTest
 @Transactional
 public class MovieServiceTestsIT {
