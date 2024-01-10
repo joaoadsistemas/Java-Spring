@@ -5,6 +5,7 @@ import com.joaosilveira.dscommerce.entities.Role;
 import com.joaosilveira.dscommerce.entities.User;
 import com.joaosilveira.dscommerce.projections.UserDetailsProjection;
 import com.joaosilveira.dscommerce.repositories.UserRepository;
+import com.joaosilveira.dscommerce.util.CustomUserUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -23,6 +24,9 @@ public class UserService implements UserDetailsService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private CustomUserUtil customUserUtil;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -46,10 +50,7 @@ public class UserService implements UserDetailsService {
     // pega o usuário logado
     protected User authenticated() {
         try {
-            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-            Jwt jwtPrincipal = (Jwt) authentication.getPrincipal();
-            String username = jwtPrincipal.getClaim("username");
-
+            String username = customUserUtil.getLoggedUsername();
             return userRepository.findByEmail(username).get();
 
         } catch (Exception e) {
