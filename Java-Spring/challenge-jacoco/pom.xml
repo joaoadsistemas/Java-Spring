@@ -77,14 +77,14 @@
 				<version>0.8.7</version>
 				<configuration>
 					<excludes>
-						<exclude>com/joaosilveira/challenge-jacoco/DsmovieApplication.class</exclude>
-						<exclude>com/joaosilveira/challenge-jacoco/config/**</exclude>
-						<exclude>com/joaosilveira/challenge-jacoco/entities/**</exclude>
-						<exclude>com/joaosilveira/challenge-jacoco/dto/**</exclude>
-						<exclude>com/joaosilveira/challenge-jacoco/controllers/**</exclude>
-						<exclude>com/joaosilveira/challenge-jacoco/controllers/handlers/**</exclude>
-						<exclude>com/joaosilveira/challenge-jacoco/services/exceptions/**</exclude>
-						<exclude>com/joaosilveira/challenge-jacoco/utils/**</exclude>
+						<exclude>com/joaosilveira/challengejacoco/ChallengeJacocoApplicationTests.class</exclude>
+						<exclude>com/joaosilveira/challengejacoco/config/**</exclude>
+						<exclude>com/joaosilveira/challengejacoco/entities/**</exclude>
+						<exclude>com/joaosilveira/challengejacoco/dto/**</exclude>
+						<exclude>com/joaosilveira/challengejacoco/controllers/**</exclude>
+						<exclude>com/joaosilveira/challengejacoco/controllers/handlers/**</exclude>
+						<exclude>com/joaosilveira/challengejacoco/services/exceptions/**</exclude>
+						<exclude>com/joaosilveira/challengejacoco/utils/**</exclude>
 					</excludes>
 				</configuration>
 				<executions>
