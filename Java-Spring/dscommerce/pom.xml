@@ -98,6 +98,8 @@
 						<exclude>com/joaosilveira/dscommerce/dto/**</exclude>
 						<exclude>com/joaosilveira/dscommerce/controllers/handlers/**</exclude>
 						<exclude>com/joaosilveira/dscommerce/services/exceptions/**</exclude>
+						<exclude>com/joaosilveira/dscommerce/util/**</exclude>
+						<exclude>com/joaosilveira/dscommerce/controllers/**</exclude>
 					</excludes>
 				</configuration>
 				<executions>

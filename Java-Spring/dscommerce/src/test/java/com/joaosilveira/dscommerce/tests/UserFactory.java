@@ -34,7 +34,7 @@ public class UserFactory {
     public static User createCustomClientUser(Long id, String username) {
         User user = new User(id, "Client", username, "9799769",
                 LocalDate.parse("1987-12-13"), "$2a$10$yF8kfPJAcjnljzTLj2dgs.LEOLbN1K1fqoFtoFRoq68JoRtkAHTXm");
-        user.addRole(new Role(2L, "ROLE_ADMIN"));
+        user.addRole(new Role(2L, "ROLE_CLIENT"));
 
         return user;
     }

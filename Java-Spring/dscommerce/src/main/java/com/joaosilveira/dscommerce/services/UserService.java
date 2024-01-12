@@ -48,7 +48,7 @@ public class UserService implements UserDetailsService {
     }
 
     // pega o usuário logado
-    protected User authenticated() {
+    public User authenticated() {
         try {
             String username = customUserUtil.getLoggedUsername();
             return userRepository.findByEmail(username).get();
