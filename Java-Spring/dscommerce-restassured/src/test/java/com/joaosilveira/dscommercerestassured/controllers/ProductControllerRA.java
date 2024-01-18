@@ -134,7 +134,7 @@ public class ProductControllerRA {
 
     @Test
     public void insertShouldReturnProductCreatedWhenLoggedAsAdmin() throws JSONException {
-        JSONObject newProduct = new JSONObject(postProductInstance);
+                JSONObject newProduct = new JSONObject(postProductInstance);
 
         given()
                 .header("Content-type", "application/json")
