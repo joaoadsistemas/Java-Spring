@@ -27,7 +27,7 @@ public class ControllerExceptionHandler {
     }
 
     @ExceptionHandler(DatabaseException.class)
-    public ResponseEntity<CustomError> integrityViolation(ResourceNotFoundException e, HttpServletRequest request) {
+    public ResponseEntity<CustomError> integrityViolation(DatabaseException e, HttpServletRequest request) {
 
         HttpStatus status = HttpStatus.BAD_REQUEST;
         CustomError err = new CustomError(Instant.now(), status.value(), e.getMessage(), request.getRequestURI());
