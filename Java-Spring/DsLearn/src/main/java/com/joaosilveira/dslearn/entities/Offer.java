@@ -3,7 +3,9 @@ package com.joaosilveira.dslearn.entities;
 import jakarta.persistence.*;
 
 import java.time.Instant;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "tb_offer")
@@ -20,6 +22,8 @@ public class Offer {
     @JoinColumn(name = "course_id")
     private Course course;
 
+    @OneToMany(mappedBy = "offer")
+    private Set<Resource> resources = new HashSet<>();
 
     public Offer() {
 
