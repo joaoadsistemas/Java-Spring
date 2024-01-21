@@ -20,7 +20,7 @@ public class Enrollment {
     private Instant enrollMoment;
     @Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
     private Instant refundMoment;
-    private boolean avaiable;
+    private boolean available;
     private boolean onlyUpdate;
 
     public Enrollment() {
@@ -33,7 +33,7 @@ public class Enrollment {
         this.id.setOffer(offer);
         this.enrollMoment = enrollMoment;
         this.refundMoment = refundMoment;
-        this.avaiable = avaiable;
+        this.available = avaiable;
         this.onlyUpdate = onlyUpdate;
     }
 
@@ -72,12 +72,12 @@ public class Enrollment {
         this.refundMoment = refundMoment;
     }
 
-    public boolean isAvaiable() {
-        return avaiable;
+    public boolean isAvailable() {
+        return available;
     }
 
-    public void setAvaiable(boolean avaiable) {
-        this.avaiable = avaiable;
+    public void setAvailable(boolean avaiable) {
+        this.available = avaiable;
     }
 
     public boolean isOnlyUpdate() {
