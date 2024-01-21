@@ -16,6 +16,8 @@ public class Resource {
     private String title;
     private String description;
     private Integer position;
+
+    @Column(columnDefinition = "TEXT")
     private String imgUri;
     private ResourceType type;
 

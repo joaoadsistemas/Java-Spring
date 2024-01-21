@@ -78,6 +78,10 @@ public class Offer {
         this.course = course;
     }
 
+    public Set<Resource> getResources() {
+        return resources;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
