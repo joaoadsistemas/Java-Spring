@@ -24,7 +24,7 @@ public abstract class Lesson {
     // criando uma tabela de associação com 3 colunas, ja que o Enrollment é uma chave composta
     @ManyToMany
     @JoinTable(name = "tb_lessons_done",
-            joinColumns = @JoinColumn(name = "lesson_id_id"),
+            joinColumns = @JoinColumn(name = "lesson_id"),
             inverseJoinColumns = {
                     @JoinColumn(name = "user_id"),
                     @JoinColumn(name = "offer_id")
