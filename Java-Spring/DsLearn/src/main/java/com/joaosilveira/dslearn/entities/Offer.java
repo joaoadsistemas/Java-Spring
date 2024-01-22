@@ -27,6 +27,9 @@ public class Offer {
     @OneToMany(mappedBy = "offer")
     private Set<Resource> resources = new HashSet<>();
 
+    @OneToMany(mappedBy = "offer")
+    private Set<Topic> topics = new HashSet<>();
+
     public Offer() {
 
     }
@@ -82,6 +85,10 @@ public class Offer {
 
     public Set<Resource> getResources() {
         return resources;
+    }
+
+    public Set<Topic> getTopics() {
+        return topics;
     }
 
     @Override
