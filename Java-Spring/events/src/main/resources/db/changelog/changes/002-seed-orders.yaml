@@ -1,0 +1,194 @@
+databaseChangeLog:
+  - changeSet:
+      id: 002-seed-orders
+      author: joao-silveira
+      changes:
+        - insert:
+            tableName: orders
+            columns:
+              - column:
+                  name: customer_name
+                  value: "João Silva"
+              - column:
+                  name: total
+                  value: 1299.99
+              - column:
+                  name: status
+                  value: "PENDING"
+              - column:
+                  name: previous_status
+                  value: "PENDING"
+              - column:
+                  name: metadata
+                  value: '{"source": "web", "paymentMethod": "credit_card", "deliveryType": "express"}'
+
+        - insert:
+            tableName: orders
+            columns:
+              - column:
+                  name: customer_name
+                  value: "Maria Santos"
+              - column:
+                  name: total
+                  value: 499.50
+              - column:
+                  name: status
+                  value: "APPROVED"
+              - column:
+                  name: previous_status
+                  value: "PENDING"
+              - column:
+                  name: metadata
+                  value: '{"source": "mobile_app", "paymentMethod": "pix", "giftWrap": true}'
+
+        - insert:
+            tableName: orders
+            columns:
+              - column:
+                  name: customer_name
+                  value: "Pedro Oliveira"
+              - column:
+                  name: total
+                  value: 2599.99
+              - column:
+                  name: status
+                  value: "PROCESSING"
+              - column:
+                  name: previous_status
+                  value: "APPROVED"
+              - column:
+                  name: metadata
+                  value: '{"source": "web", "paymentMethod": "bank_transfer", "specialInstructions": "Fragile items"}'
+
+        - insert:
+            tableName: orders
+            columns:
+              - column:
+                  name: customer_name
+                  value: "Ana Costa"
+              - column:
+                  name: total
+                  value: 159.90
+              - column:
+                  name: status
+                  value: "DELIVERED"
+              - column:
+                  name: previous_status
+                  value: "SHIPPING"
+              - column:
+                  name: metadata
+                  value: '{"source": "marketplace", "paymentMethod": "credit_card", "rating": 5}'
+
+        - insert:
+            tableName: orders
+            columns:
+              - column:
+                  name: customer_name
+                  value: "Lucas Mendes"
+              - column:
+                  name: total
+                  value: 899.00
+              - column:
+                  name: status
+                  value: "CANCELLED"
+              - column:
+                  name: previous_status
+                  value: "PENDING"
+              - column:
+                  name: metadata
+                  value: '{"source": "web", "paymentMethod": "credit_card", "cancellationReason": "customer_request"}'
+
+        - insert:
+            tableName: orders
+            columns:
+              - column:
+                  name: customer_name
+                  value: "Fernanda Lima"
+              - column:
+                  name: total
+                  value: 3499.99
+              - column:
+                  name: status
+                  value: "SHIPPING"
+              - column:
+                  name: previous_status
+                  value: "PROCESSING"
+              - column:
+                  name: metadata
+                  value: '{"source": "web", "paymentMethod": "credit_card", "shippingCompany": "FedEx", "trackingCode": "FX123456789"}'
+
+        - insert:
+            tableName: orders
+            columns:
+              - column:
+                  name: customer_name
+                  value: "Roberto Alves"
+              - column:
+                  name: total
+                  value: 199.99
+              - column:
+                  name: status
+                  value: "PENDING"
+              - column:
+                  name: previous_status
+                  value: "PENDING"
+              - column:
+                  name: metadata
+                  value: '{"source": "mobile_app", "paymentMethod": "pix", "promoCode": "FIRST10"}'
+
+        - insert:
+            tableName: orders
+            columns:
+              - column:
+                  name: customer_name
+                  value: "Carolina Santos"
+              - column:
+                  name: total
+                  value: 4599.99
+              - column:
+                  name: status
+                  value: "APPROVED"
+              - column:
+                  name: previous_status
+                  value: "PENDING"
+              - column:
+                  name: metadata
+                  value: '{"source": "web", "paymentMethod": "bank_transfer", "installments": 10, "insurance": true}'
+
+        - insert:
+            tableName: orders
+            columns:
+              - column:
+                  name: customer_name
+                  value: "Marcelo Costa"
+              - column:
+                  name: total
+                  value: 799.50
+              - column:
+                  name: status
+                  value: "PROCESSING"
+              - column:
+                  name: previous_status
+                  value: "APPROVED"
+              - column:
+                  name: metadata
+                  value: '{"source": "marketplace", "paymentMethod": "credit_card", "giftMessage": "Happy Birthday!"}'
+
+        - insert:
+            tableName: orders
+            columns:
+              - column:
+                  name: customer_name
+                  value: "Amanda Oliveira"
+              - column:
+                  name: total
+                  value: 1799.99
+              - column:
+                  name: status
+                  value: "SHIPPING"
+              - column:
+                  name: previous_status
+                  value: "PROCESSING"
+              - column:
+                  name: metadata
+                  value: '{"source": "web", "paymentMethod": "pix", "priority": "high", "estimatedDelivery": "2024-01-10"}'
