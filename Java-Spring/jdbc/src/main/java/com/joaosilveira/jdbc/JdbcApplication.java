@@ -22,5 +22,14 @@ public class JdbcApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		logger.info("All persons: {}", personJdbcDAO.findAll());
+		logger.info("Person with id 1001: {}", personJdbcDAO.findById(1001));
+		logger.info("Person deleted: {}", personJdbcDAO.deleteById(1001));
+
+		Person person = new Person(1005, "<NAME>", "Brasilia", new java.util.Date());
+		logger.info("Person inserted: {}", personJdbcDAO.insert(person));
+
+		person.setName("<NAME_UPDATE>");
+		logger.info("Person updated: {}", personJdbcDAO.update(person));
+
 	}
 }
